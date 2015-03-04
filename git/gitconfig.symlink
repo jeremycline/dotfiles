@@ -5,7 +5,7 @@
         protocol = https
 [user]
         name = Jeremy Cline
-        email = einecline@gmail.com
+	email = jeremy@jcline.org
 [alias]
         co = checkout
         count   = !git shortlog -sn

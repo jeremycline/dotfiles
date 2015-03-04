@@ -1,4 +1,122 @@
-syntax on
+" Fixes tabs and sets indentation to 4 spaces
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
-" Wrap gitcommit file types at the appropriate length
-filetype indent plugin on
+" Turns off vi compatibility for more features. Should be set by default, but
+" just in case...
+set nocompatible
+
+" This should be on by default, but just in case...
+set showcmd
+
+" Makes backspace behave like most other apps
+set backspace=2
+
+" Add line numbers
+set number
+
+" jj exits insert mode
+inoremap jj <Esc>
+
+" Swap ; and : in command mode to make commands easier. This blows people's
+" minds when they try to use my vim sessions.
+nnoremap : ;
+nnoremap ; :
+
+" Calls indent on the current file... I should probably remove this eventually
+nnoremap <F2> :call IndentFile()<CR>
+
+" Map Ctrl + movement keys to move around window splits, rather than Ctrl + w
+" + movement keys
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+" map task lists to \td
+map <leader>td <Plug>TaskList
+
+" map gundo to \g
+map <leader>g :GundoToggle<CR>
+
+" set fs in command mode to open NERDTree
+nnoremap fs :NERDTreeToggle<CR>
+" map \j to open definitions and \r to rename
+map <leader>j :RopeGotoDefinition<CR>
+map <leader>r :RopeRename<CR>
+
+" Remove all trailing whitespace
+:nnoremap <silent> <F12> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+" Load pathogen (filetype must be off to load pathogen correctly)
+call pathogen#infect()
+filetype off
+syntax on
+filetype plugin indent on
+
+set autoindent
+
+" Set up the status line and turn off the ruler
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set statusline+=%{fugitive#statusline()}
+set laststatus=2
+set noruler
+
+" Sets the color of the statusline depending on mode
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+
+" Make sure 256 color is set and set the theme
+set t_Co=256
+colorscheme mustang
+
+" Sets the statusline to green initially (in gvim)
+hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
+
+" Set up code folding (za, I think)
+set foldmethod=indent
+set foldlevel=99
+
+" Turn on Tab Completion for python
+au FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
+
+" Automatically call Flake8 when saving python files. Remember to pip install
+" flake8
+autocmd BufWritePost *.py call Flake8()
+
+" Saves the current file, compiles using the gcc flags -Wall, -std=c99,
+" and -o *filename*, then displays any warnings/errors.
+func! CompileGcc()
+    exec "w"
+    exec "!gcc -Wall -std=c99 % -o %<"
+endfunc
+
+" Saves the current file, compiles using the gcc flags -Wall, -std=c99,
+" and -o *filename*, displays any warnings, then runs the program.
+func! CompileRunGcc()
+    exec "w"
+    exec "!gcc -Wall -std=c99 % -o %<"
+    exec "! ./%<"
+endfunc
+
+" Saves the current file, then runs it through indent using the default
+" configuration. Note: A backup file is created, entitled *filename*~
+func! IndentFile()
+    exec "w"
+    exec "!indent %"
+    exec "e"
+endfunc
+
+function! InsertStatuslineColor(mode)
+    if a:mode == 'i'
+        hi statusline guibg=Green ctermfg=52 guifg=Black ctermbg=0
+    elseif a:mode == 'r'
+        hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
+    else
+        hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
+    endif
+endfunction
+
