@@ -12,3 +12,4 @@ fi
 export CLASSPATH=$CLASSPATH:/home/jcine/Android/Sdk/
 export PATH=$PATH:$HOME/devel/go/bin/
 export GOPATH=$HOME/devel/go/
+export VAGRANT_DEFAULT_PROVIDER=libvirt
