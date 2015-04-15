@@ -5,11 +5,11 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# Uncomment the following line if you don't like systemctl's auto-paging feature:
-# export SYSTEMD_PAGER=
-
-# User specific aliases and functions
 export CLASSPATH=$CLASSPATH:/home/jcine/Android/Sdk/
 export PATH=$PATH:$HOME/devel/go/bin/
 export GOPATH=$HOME/devel/go/
 export VAGRANT_DEFAULT_PROVIDER=libvirt
+
+# Makes running IPython in a virtualenv easier
+alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
+alias gl="git log --graph"
