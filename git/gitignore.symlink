@@ -42,6 +42,12 @@ Thumbs.db
 *.swp
 *.swo
 
+# Let's not check in any keys by accident #
+###########################################
+*.pem
+*.crt
+*.key
+*_rsa
 
 #######################
 # Python related files #
@@ -94,6 +100,9 @@ coverage.xml
 # Django stuff:
 *.log
 *.pot
+
+# PyCharm
+.idea
 
 # Sphinx documentation
 docs/_build/

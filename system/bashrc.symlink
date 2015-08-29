@@ -6,10 +6,18 @@ if [ -f /etc/bashrc ]; then
 fi
 
 export CLASSPATH=$CLASSPATH:/home/jcine/Android/Sdk/
-export PATH=$PATH:$HOME/devel/go/bin/
+export PATH=$PATH:$HOME/devel/go/bin/:$HOME/.dotfiles/bin
 export GOPATH=$HOME/devel/go/
 export VAGRANT_DEFAULT_PROVIDER=libvirt
 
 # Makes running IPython in a virtualenv easier
 alias ipy="python -c 'import IPython; IPython.terminal.ipapp.launch_new_instance()'"
 alias gl="git log --graph"
+alias rhui="cd ~/devel/cloude/rhui"
+
+# Set up virtualenvwrapper
+export WORKON_HOME=/home/jcline/.virtualenvs
+export PIP_VIRTUALENV_BASE=
+export VIRTUALENV_USE_DISTRIBUTE=true
+export PIP_RESPECT_VIRTUALENV=true
+source /usr/bin/virtualenvwrapper.sh

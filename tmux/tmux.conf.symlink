@@ -1,0 +1,7 @@
+# Makes going to/from screen painless
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+
+bind | split-window -h
+bind - split-window -v
