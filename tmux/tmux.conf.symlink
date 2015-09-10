@@ -5,3 +5,5 @@ bind C-a send-prefix
 
 bind | split-window -h
 bind - split-window -v
+
+source "/usr/share/tmux/powerline.conf"
